@@ -3,7 +3,7 @@
 #include "our_functs.h"
 
 void user_interface(void);
-void find_word_home(void);
+void find_word_home(char *file_name, int file_name_len);
 
 int main(void)
 {
@@ -13,7 +13,12 @@ int main(void)
 	user_interface();
 	while((scanf("%d", &choice)) == 1){
 		if(choice == 1){
-			find_word_home();
+            char name_of_file[100];
+            printf("Enter name of file: \n");
+            scanf("%s", name_of_file);
+            name_of_file[99] = '\0';
+            int len_file_name = strlen(name_of_file);
+			find_word_home(name_of_file, len_file_name);
 			user_interface();
 		}else if(choice == 0){
 			printf("Thank You, Bye Bye\n");
@@ -22,43 +27,3 @@ int main(void)
 	}
 	return 0;
 }
-
-void find_word_home(void)
-{
-	char searched_word[250];
-	char ch;
-	int num;
-	int valid;
-	char che;
-	do{
-      		printf("Enter the word that you are searching for:\n");
-      		getchar();
-    		valid = my_input_func(searched_word);
- 			printf("Do you want to disregard capitalization:\n");
- 			ch = getchar();
-  			if(ch == 'Y' || ch == 'y'){
-  				system("cls");
-   				num = word_search(searched_word, 1, strlen(searched_word));
-   				printf("%d words\n", num);
-   				getchar();
-  			}else if(ch == 'N' || ch == 'n'){
-  				system("cls");
-   				num = word_search(searched_word, 0, strlen(searched_word));
-   				printf("%d words\n", num);
-   				getchar();
-  			}
-  			printf("Return to main menu, Y/N?\n");
-  			che = getchar();
-  			if(che == 'y' || che == 'Y'){
-  				break;
-			}
- }while(valid == 1);
-}
-
-void user_interface(void)
-{
-	printf("Enter...\n");
-	printf("Digit (1) to find a searched phrase in the Bible!\n");
-	printf("Digit (0) to quit!\n");
-}
-
